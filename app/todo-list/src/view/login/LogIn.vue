@@ -1,13 +1,20 @@
 <template>
   <div class="flex-column">
-    <a-input name="Email" />
-    <a-input name="Password" />
-    <a-button name="Join" />
+    <a-input name="Email" v-model="mail" />
+    <a-input name="Password" v-model="pass" />
+    <q-btn color="primary" label="Join" @click="join" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 @Component({})
-class LogIn extends Vue {}
+class LogIn extends Vue {
+  mail = "";
+  pass = "";
+
+  join() {
+    this.$router.push({ path: "/dashboard" });
+  }
+}
 export default LogIn;
 </script>
