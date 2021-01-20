@@ -13,7 +13,7 @@ class LogIn extends Vue {
   pass = "";
 
   join() {
-    console.log(this.mail, this.pass);
+    this.$router.push({ path: "/dashboard" });
   }
 }
 export default LogIn;
