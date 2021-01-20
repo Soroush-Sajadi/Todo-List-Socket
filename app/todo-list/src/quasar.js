@@ -1,13 +1,17 @@
-import Vue from 'vue'
-
-import './styles/quasar.scss'
-import lang from 'quasar/lang/(en-us).js'
-import '@quasar/extras/material-icons/material-icons.css'
-import { Quasar } from 'quasar'
-
+import Vue from "vue";
+import "./styles/quasar.scss";
+import "@quasar/extras/roboto-font/roboto-font.css";
+import "@quasar/extras/material-icons/material-icons.css";
+import { Quasar, Dialog } from "quasar";
+import langSv from "quasar/lang/sv";
 Vue.use(Quasar, {
   config: {},
-  plugins: {
+  components: {
+    /* not needed if importStrategy is not 'manual' */
   },
-  lang: lang
- })
+  directives: {
+    /* not needed if importStrategy is not 'manual' */
+  },
+  plugins: { Dialog },
+  lang: langSv
+});
