@@ -5,7 +5,7 @@
         standout="bg-teal text-white"
         color="primary"
         @input="onInput"
-        v-model="text"
+        :value="value"
         :label="name"
       />
     </div>
@@ -17,11 +17,9 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 class Input extends Vue {
   @Prop() name: string;
   @Prop() value: string;
-  text = "";
 
   onInput(val) {
-    this.text = val;
-    return this.$emit("input", this.text);
+    return this.$emit("input", val);
   }
 }
 
