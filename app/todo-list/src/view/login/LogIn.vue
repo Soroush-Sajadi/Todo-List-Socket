@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="flex-column">
     <a-input name="Email" />
     <a-input name="Password" />
+    <a-button name="Join" />
   </div>
 </template>
 <script lang="ts">
