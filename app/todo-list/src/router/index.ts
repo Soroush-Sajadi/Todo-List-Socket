@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import LogIn from "@/view/login/LogIn.vue";
+import SignIn from "@/view/login/SignIn.vue";
 import Dashboard from "@/view/dashboard/Dashboard.vue";
 import { Component } from "vue-property-decorator";
 
@@ -9,17 +10,24 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "LogIn",
+    name: "Dashboard",
+    component: Dashboard
+  },
+  {
+    path: "/login",
+    name: "Login",
     component: LogIn,
     meta: {
       public: true
     }
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-
-    component: Dashboard
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn,
+    meta: {
+      public: true
+    }
   }
 ];
 

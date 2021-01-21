@@ -1,10 +1,14 @@
-// import _ from "lodash";
+import _ from "lodash";
 import * as EmailValidator from "email-validator";
 import passwordValidator from "password-validator";
 
-export function validateEmail(val, errorText = "Email is not valid") {
+export const required = (val, errorText = "Choose a username") => {
+  return !_.isEmpty(val) || errorText;
+};
+
+export const validateEmail = (val, errorText = "Email is not valid") => {
   return EmailValidator.validate(val) || errorText;
-}
+};
 
 export const validatePassword = (
   val,
@@ -26,5 +30,6 @@ export const validatePassword = (
 
 export default {
   email: [val => validateEmail(val)],
-  password: [val => validatePassword(val)]
+  password: [val => validatePassword(val)],
+  username: [val => required(val)]
 };
