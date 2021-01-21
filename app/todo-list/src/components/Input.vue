@@ -6,7 +6,10 @@
         color="primary"
         @input="onInput"
         :value="value"
+        :type="type"
         :label="name"
+        :rules="rules"
+        lazy-rules
       />
     </div>
   </div>
@@ -17,6 +20,8 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 class Input extends Vue {
   @Prop() name: string;
   @Prop() value: string;
+  @Prop() rules: Function;
+  @Prop() type: string;
 
   onInput(val) {
     return this.$emit("input", val);

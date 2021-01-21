@@ -1,20 +1,40 @@
 <template>
   <div class="flex-column">
-    <a-input name="Email" v-model="mail" />
-    <a-input name="Password" v-model="pass" />
-    <q-btn color="primary" label="Join" @click="join" />
+    <a-input
+      type="email"
+      name="Email"
+      v-model="email"
+      :rules="validation.email"
+    />
+    <a-input
+      type="password"
+      name="Password"
+      v-model="password"
+      :rules="validation.password"
+    />
+    <q-btn color="primary" label="Log In" @click="join" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { validation } from "../common";
+import { validateEmail, validatePassword } from "../validator/validation";
 @Component({})
-class LogIn extends Vue {
-  mail = "";
-  pass = "";
+export default class LogIn extends Vue {
+  email = "";
+  password = "";
+
+  get validation() {
+    return validation;
+  }
 
   join() {
-    this.$router.push({ path: "/dashboard" });
+    if (
+      validateEmail(this.email) === true &&
+      validatePassword(this.password) === true
+    ) {
+      this.$router.push({ path: "/dashboard" });
+    }
   }
 }
-export default LogIn;
 </script>
