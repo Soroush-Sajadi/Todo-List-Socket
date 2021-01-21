@@ -12,7 +12,7 @@
       v-model="password"
       :rules="validation.password"
     />
-    <q-btn color="primary" label="Join" @click="join" />
+    <q-btn color="primary" label="Log In" @click="join" />
   </div>
 </template>
 <script lang="ts">
