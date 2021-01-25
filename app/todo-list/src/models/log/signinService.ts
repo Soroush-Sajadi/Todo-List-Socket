@@ -1,6 +1,4 @@
 import axios from "axios";
-
-
 export interface SignIn {
   username: string;
   email: string;
