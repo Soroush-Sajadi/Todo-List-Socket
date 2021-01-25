@@ -1,6 +1,9 @@
 // tslint:disable-next-line:no-console
 import express from 'express';
 const router = express.Router();
+import cors from 'cors';
+
+router.use(cors());
 
 router.get('/', (req, res) => {
   res.json('ToDo List');
@@ -13,12 +16,11 @@ router.get('/account/:email/password', (req, res) => {
   console.log(email, password);
 })
 
-router.post('api/account', (req, res) => {
+router.post('/api/account', (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 // tslint:disable-next-line:no-console
-  console.log(username, email, password);
 })
 
 
