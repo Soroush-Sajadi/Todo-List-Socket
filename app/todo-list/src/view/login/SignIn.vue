@@ -25,8 +25,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { validation } from "../common";
 import { validateEmail, validatePassword } from "../validator/validation";
-import { signIn } from '../../models/log/signinService'
-
+import { signIn } from "../../models/log/signinService";
 
 @Component({})
 export default class SignIn extends Vue {
@@ -43,7 +42,11 @@ export default class SignIn extends Vue {
       validatePassword(this.password) === true &&
       this.username.length > 0
     ) {
-      await signIn({username: this.username,email: this.email ,password: this.password})
+      const save = await signIn({
+        username: this.username,
+        email: this.email,
+        password: this.password
+      });
       this.$router.push({ path: "/login" });
     }
   }
