@@ -15,7 +15,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/login",
-    name: "Login",
+    name: "LogIn",
     component: LogIn,
     meta: {
       public: true

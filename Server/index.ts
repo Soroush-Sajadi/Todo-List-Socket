@@ -3,7 +3,9 @@ import { Application } from 'express';
 // import socketio from "socket.io";
 import http from 'http';
 import express = require('express');
+import cors from 'cors';
 import router from './src/router';
+import bodyParser from 'body-parser'
 
 
 const app: Application = express();
@@ -15,7 +17,9 @@ const server = http.createServer(app)
 
 
 
-// tslint:disable-next-line:no-console
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(router);
 
 

@@ -2,23 +2,23 @@
 import express from 'express';
 const router = express.Router();
 
+
 router.get('/', (req, res) => {
   res.json('ToDo List');
 })
 
-router.get('/account/:email/password', (req, res) => {
+router.get('/api/account/:email/:password', (req, res) => {
   const email = req.params.email;
   const password = req.params.password;
-  // tslint:disable-next-line:no-console
-  console.log(email, password);
+  res.json(true)
 })
 
-router.post('api/account', (req, res) => {
+router.post('/api/account', (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-// tslint:disable-next-line:no-console
-  console.log(username, email, password);
+  res.json(true)
+
 })
 
 
