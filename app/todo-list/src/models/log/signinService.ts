@@ -7,5 +7,5 @@ export interface SignIn {
 
 const baseUrl = "http://localhost:5000/api/account";
 export const signIn = async (data: SignIn) => {
-  await axios.post(baseUrl, data);
+  return await axios.post(baseUrl, data);
 };

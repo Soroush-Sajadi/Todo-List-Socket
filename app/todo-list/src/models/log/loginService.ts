@@ -6,5 +6,5 @@ export interface LogIn {
 }
 const baseUrl = "http://localhost:5000/api/account";
 export const logIn = async (data: LogIn) => {
-  await axios.get(`${baseUrl}/${data.email}/${data.password}`);
+  return await axios.get(`${baseUrl}/${data.email}/${data.password}`);
 };
