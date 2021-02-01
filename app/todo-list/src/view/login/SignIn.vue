@@ -47,7 +47,7 @@ export default class SignIn extends Vue {
         email: this.email,
         password: this.password
       });
-      this.$router.push({ path: "/login" });
+      save.data ? this.$router.push({ path: "/" }) : null;
     }
   }
 }

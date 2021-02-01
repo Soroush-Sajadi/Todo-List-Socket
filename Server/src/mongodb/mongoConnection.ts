@@ -1,38 +1,42 @@
 import mongo from 'mongodb';
+import { SignIn, LogIn } from './interface'
 
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongo.MongoClient
 const dbName = 'todolist';
-let db;
+let db: any;
 
-const mongodb = async () => {
-   MongoClient.connect(url, { useNewUrlParser: true }, async (err, client) => {
-    // tslint:disable-next-line:no-console
-    if (err) return console.log(err)
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true  }, (err, client) => {
+  // tslint:disable-next-line:no-console
+  if (err) return console.log(err)
+  db =  client.db(dbName);
+})
 
-    // Storing a reference to the database so you can use it later
-    // tslint:disable-next-line:no-console
-    db = await client.db(dbName);
-    db.collection('characters').find({}).toArray((errr,res) => {
+export const signIn = (user: SignIn, callBack: any) => {
+
+    db.collection('users').find({ email: user.email }).toArray((error: any, res: string | any[]) => {
       //  tslint:disable-next-line:no-console
-        if (errr) return console.log(errr)
-        // tslint:disable-next-line:no-console
-        console.log(res);
-        client.close()
+      if (error) return console.log(error)
+      if (res.length === 0) {
+        db.collection('users').insertOne({
+          username: user.username,
+          email: user.email,
+          password: user.password
+        })
+        return callBack(true)
+      }
+      return callBack(false)
     })
-    // db.collection('characters').findOne({}, (errr, res) => {
-    //     // tslint:disable-next-line:no-console
-    //     if (errr) return console.log(errr)
-    //     // tslint:disable-next-line:no-console
-    //     console.log(res);
-    //     client.close()
-    //   })
-    // tslint:disable-next-line:no-console
-    // console.log(`Connected MongoDB: ${db}`)
-    // // tslint:disable-next-line:no-console
-    // console.log(`Database: ${dbName}`)
-    // return db
+}
+
+export const logIn = (user: LogIn, callBack: any) => {
+  db.collection('users').find({ email: user.email, password: user.password }).toArray((error: any, res: string | any[]) => {
+    //  tslint:disable-next-line:no-console
+    if (error) return console.log(error)
+    if (res.length === 0) {
+      return callBack(false)
+    }
+    return callBack(true)
   })
 }
 
-export default mongodb;
