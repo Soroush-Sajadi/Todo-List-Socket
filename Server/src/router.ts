@@ -25,5 +25,11 @@ router.post('/api/account', (req, res) => {
   })
 })
 
+router.post('/api/list', (req, res) => {
+  const list = req.body.list;
+  // tslint:disable-next-line:no-console
+  console.log(list)
+})
+
 
 export default router;
