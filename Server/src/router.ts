@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-console
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
 
@@ -12,7 +12,7 @@ router.get('/api/account/:email/:password', async (req, res) => {
   const email = req.params.email;
   const password = req.params.password;
   logIn({email, password}, (result: any) => {
-    res.json(result)
+    res.json(result[0])
   })
 })
 
@@ -27,8 +27,13 @@ router.post('/api/account', (req, res) => {
 
 router.post('/api/list', (req, res) => {
   const list = req.body.list;
-  // tslint:disable-next-line:no-console
-  console.log(list)
+})
+
+router.get('/api/list/:id', (req, res) => {
+  const id = req.params.id
+  getLists(id, (result: any) => {
+    res.json(result)
+  })
 })
 
 

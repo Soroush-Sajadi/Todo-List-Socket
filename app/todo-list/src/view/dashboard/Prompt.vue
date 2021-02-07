@@ -34,7 +34,7 @@ export default class Prompt extends Vue {
   newList = "";
 
   addNewList() {
-    const save = addList(this.newList);
+    addList(this.newList);
     this.$emit("close", false);
   }
 

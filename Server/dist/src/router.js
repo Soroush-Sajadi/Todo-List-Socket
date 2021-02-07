@@ -23,7 +23,7 @@ router.get('/api/account/:email/:password', (req, res) => __awaiter(void 0, void
     const email = req.params.email;
     const password = req.params.password;
     mongoConnection_1.logIn({ email, password }, (result) => {
-        res.json(result);
+        res.json(result[0]);
     });
 }));
 router.post('/api/account', (req, res) => {
@@ -36,8 +36,12 @@ router.post('/api/account', (req, res) => {
 });
 router.post('/api/list', (req, res) => {
     const list = req.body.list;
-    // tslint:disable-next-line:no-console
-    console.log(list);
+});
+router.get('/api/list/:id', (req, res) => {
+    const id = req.params.id;
+    mongoConnection_1.getLists(id, (result) => {
+        res.json(result);
+    });
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map
