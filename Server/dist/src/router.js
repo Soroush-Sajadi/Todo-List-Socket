@@ -15,20 +15,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // tslint:disable-next-line:no-console
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-const signin_1 = require("./log/signin");
+const mongoConnection_1 = require("./mongodb/mongoConnection");
 router.get('/', (req, res) => {
     res.json('hi');
 });
 router.get('/api/account/:email/:password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.params.email;
     const password = req.params.password;
-    res.json(true);
+    mongoConnection_1.logIn({ email, password }, (result) => {
+        res.json(result[0]);
+    });
 }));
 router.post('/api/account', (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
-    signin_1.signIn({ username, email, password }, (result) => {
+    mongoConnection_1.signIn({ username, email, password }, (result) => {
+        res.json(result);
+    });
+});
+router.post('/api/list', (req, res) => {
+    const list = req.body.list;
+});
+router.get('/api/list/:id', (req, res) => {
+    const id = req.params.id;
+    mongoConnection_1.getLists(id, (result) => {
         res.json(result);
     });
 });

@@ -38,6 +38,7 @@ export default class LogIn extends Vue {
       validatePassword(this.password) === true
     ) {
       const save = await logIn({ email: this.email, password: this.password });
+      localStorage.id = save.data._id;
       save.data ? this.$router.push({ path: "/" }) : null;
     }
   }

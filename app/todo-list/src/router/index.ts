@@ -11,12 +11,14 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Dashboard",
-    component: Dashboard
+    component: Dashboard,
+    props: true
   },
   {
     path: "/login",
     name: "LogIn",
     component: LogIn,
+    props: true,
     meta: {
       public: true
     }
