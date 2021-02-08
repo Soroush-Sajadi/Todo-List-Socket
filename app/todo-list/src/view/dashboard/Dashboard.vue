@@ -1,8 +1,14 @@
 <template>
   <div>
     <Toolbar @add="newToDoList" />
-    <Prompt :prompt="prompt" v-if="prompt" @close="onClose" v-model="newList" />
-    <Lists :id="id" />
+    <Prompt
+      :prompt="prompt"
+      v-if="prompt"
+      @close="onClose"
+      v-model="newList"
+      :id="id"
+    />
+    <Lists :id="id" :list="newList" />
   </div>
 </template>
 <script lang="ts">
@@ -28,6 +34,7 @@ export default class Dashboard extends Vue {
 
   newToDoList(e) {
     this.prompt = e;
+    console.log(this.newList);
   }
 
   onClose(e) {

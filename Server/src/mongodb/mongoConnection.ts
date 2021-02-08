@@ -41,6 +41,18 @@ export const logIn = (user: LogIn, callBack: any) => {
   })
 }
 
+export const addList = (id: string, listName: string, callBack: any) => {
+  const objectId = new ObjectId(id);
+  db.collection('users').update(
+    { _id: objectId },
+    {
+      $push: {
+        toDoLists: {name: listName, toDos:[]}
+      }
+    }
+  )
+}
+
 export const getLists = (id: string, callBack: any) => {
   const objectId = new ObjectId(id);
   db.collection('users').find({_id: objectId}).toArray((error:any, res: any[]) => {

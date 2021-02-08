@@ -36,6 +36,10 @@ router.post('/api/account', (req, res) => {
 });
 router.post('/api/list', (req, res) => {
     const list = req.body.list;
+    const id = req.body.id;
+    mongoConnection_1.addList(id, list, (result) => {
+        res.json(result);
+    });
 });
 router.get('/api/list/:id', (req, res) => {
     const id = req.params.id;

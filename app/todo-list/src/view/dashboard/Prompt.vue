@@ -30,19 +30,20 @@ import { addList } from "@/models/dashboard/dashboardService";
 @Component({})
 export default class Prompt extends Vue {
   @Prop() prompt: boolean;
+  @Prop() id: string;
   @Prop() value: string;
   newList = "";
 
   addNewList() {
-    addList(this.newList);
+    addList(this.newList, this.id);
     this.$emit("close", false);
   }
 
   cancel() {
     this.$emit("close", false);
   }
-  onInput(e) {
-    this.newList = e;
+  onInput(value) {
+    this.newList = value;
   }
 }
 </script>

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLists = exports.logIn = exports.signIn = void 0;
+exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -46,15 +46,30 @@ const logIn = (user, callBack) => {
     });
 };
 exports.logIn = logIn;
+const addList = (id, listName, callBack) => {
+    const objectId = new ObjectId(id);
+    // db.collection('users').find({_id: objectId}).toArray((error: any, res: any[]) => {
+    //   //  tslint:disable-next-line:no-console
+    //   if (error) return console.log(error)
+    //   res[0].toDoLists.insertOne({
+    //     [listName]: []
+    //   })
+    //   return callBack(true)
+    // })
+    db.users.update({ _id: objectId }, {
+        $push: {
+            toDoLists: [{ name: listName }]
+        }
+    });
+};
+exports.addList = addList;
 const getLists = (id, callBack) => {
     const objectId = new ObjectId(id);
     db.collection('users').find({ _id: objectId }).toArray((error, res) => {
         //  tslint:disable-next-line:no-console
         if (error)
             return console.log(error);
-        //  tslint:disable-next-line:no-console
-        console.log(id, res);
-        return callBack(res);
+        return callBack(res[0].toDoLists);
     });
 };
 exports.getLists = getLists;
