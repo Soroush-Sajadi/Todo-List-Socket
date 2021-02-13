@@ -2,3 +2,18 @@
   margin: auto;
   width: 33%;
 }
+.lists {
+  display: flex;
+  width: 55%;
+  margin-left: 3%;
+  height: 46px;
+  border-radius: 7vh;
+  font-size: 15px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px #0000bc;
+  cursor: pointer;
+}
+.lists:not(:first-child) {
+  margin-top: 2%;
+}

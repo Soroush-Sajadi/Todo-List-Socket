@@ -1,23 +1,45 @@
 <template>
-  <div>
-    <ul id="example-1">
-      <li v-for="list in lists" :key="list.name">
+  <div class="wrapper">
+    <div class="lists-wrapper">
+      <div class="lists" v-for="list in lists" :key="list.name" @click="toDo">
         {{ list.name }}
-      </li>
-    </ul>
+      </div>
+    </div>
+    <div class="toDos-wrapper">
+      <ToDos v-if="showToDo" />
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { getLists } from "@/models/dashboard/dashboardService";
-@Component({})
+import ToDos from "./ToDos.vue";
+@Component({
+  components: { ToDos }
+})
 export default class Lists extends Vue {
   @Prop() id: string;
   lists = [];
+  showToDo = false;
 
   async created() {
     const lists = await getLists(this.id);
     this.lists = lists.data;
   }
+
+  toDo() {
+    this.showToDo = true;
+  }
 }
 </script>
+<style lang="scss">
+.lists-wrapper {
+  width: 50%;
+}
+.wrapper {
+  display: flex;
+}
+.toDos-wrapper {
+  width: 50%;
+}
+</style>

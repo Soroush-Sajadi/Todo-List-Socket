@@ -48,17 +48,9 @@ const logIn = (user, callBack) => {
 exports.logIn = logIn;
 const addList = (id, listName, callBack) => {
     const objectId = new ObjectId(id);
-    // db.collection('users').find({_id: objectId}).toArray((error: any, res: any[]) => {
-    //   //  tslint:disable-next-line:no-console
-    //   if (error) return console.log(error)
-    //   res[0].toDoLists.insertOne({
-    //     [listName]: []
-    //   })
-    //   return callBack(true)
-    // })
-    db.users.update({ _id: objectId }, {
+    db.collection('users').update({ _id: objectId }, {
         $push: {
-            toDoLists: [{ name: listName }]
+            toDoLists: { name: listName, toDos: [] }
         }
     });
 };
