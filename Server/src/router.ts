@@ -40,5 +40,11 @@ router.get('/api/list/:id', (req, res) => {
   })
 })
 
+router.post('/api/list/todo', (req, res) => {
+  const data = req.body.data
+  // tslint:disable-next-line:no-console
+  console.log(data)
+})
+
 
 export default router;

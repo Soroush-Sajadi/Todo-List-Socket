@@ -12,13 +12,19 @@
             autofocus
             :value="value"
             @input="onInput"
-            @keyup.enter="addNewList"
+            @keyup.enter="addNewToDo"
           ></q-input>
         </q-card-section>
+        <div class="q-pa-md">
+          <div @click="deadLine">Dead line: {{ date }}</div>
+          <div v-if="show" class="q-gutter-md row items-start">
+            <q-date :value="value" @input="onInputDate" minimal />
+          </div>
+        </div>
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup @click="cancel"></q-btn>
-          <q-btn flat label="Add" v-close-popup @click="addNewList"></q-btn>
+          <q-btn flat label="Add" v-close-popup @click="addNewToDo"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -26,16 +32,30 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { addList } from "@/models/dashboard/dashboardService";
+import { addToDo } from "@/models/dashboard/dashboardService";
 @Component({})
 export default class Prompt extends Vue {
   @Prop() prompt: boolean;
   @Prop() id: string;
   @Prop() value: string;
-  newList = "";
+  @Prop() listName: string;
+  date = null;
+  show = false;
+  newToDo = "";
 
-  addNewList() {
-    addList(this.newList, this.id);
+  get username() {
+    return localStorage.username;
+  }
+
+  addNewToDo() {
+    const toDo = {
+      author: this.username,
+      text: this.newToDo,
+      dateIssued: new Date(),
+      dateDeadLine: new Date(this.date),
+      complete: false
+    };
+    addToDo(toDo, this.id, this.listName);
     this.$emit("close", false);
   }
 
@@ -43,7 +63,15 @@ export default class Prompt extends Vue {
     this.$emit("close", false);
   }
   onInput(value) {
-    this.newList = value;
+    this.newToDo = value;
+  }
+
+  onInputDate(value) {
+    this.date = value;
+  }
+
+  deadLine() {
+    this.show = !this.show;
   }
 }
 </script>

@@ -34,7 +34,6 @@ export default class Dashboard extends Vue {
 
   newToDoList(e) {
     this.prompt = e;
-    console.log(this.newList);
   }
 
   onClose(e) {

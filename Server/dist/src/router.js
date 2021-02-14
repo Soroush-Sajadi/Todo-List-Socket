@@ -47,5 +47,10 @@ router.get('/api/list/:id', (req, res) => {
         res.json(result);
     });
 });
+router.post('/api/list/todo', (req, res) => {
+    const data = req.body.data;
+    // tslint:disable-next-line:no-console
+    console.log(data);
+});
 exports.default = router;
 //# sourceMappingURL=router.js.map

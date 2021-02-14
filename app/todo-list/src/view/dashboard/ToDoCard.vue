@@ -1,36 +1,20 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card flat bordered class="my-card bg-grey-1">
-      <q-card-section>
-        <div class="row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">Our Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </div>
-
-          <div class="col-auto">
-            <q-btn color="grey-7" round flat icon="more_vert">
-              <q-menu cover auto-close>
-                <q-list>
-                  <q-item clickable>
-                    <q-item-section>Remove Card</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </div>
+    <q-card class="my-card">
+      <q-card-section class="bg-primary text-white">
+        <div class="text-h6">Buy Coffee</div>
+        <div class="card-info">
+          <div class="text-subtitle3">by John Doe</div>
+          <div class="text-subtitle3">Issued: 2020/02/02</div>
+          <div class="text-subtitle3">Dead line: 2020/02/03</div>
         </div>
       </q-card-section>
 
-      <q-card-section>
-        {{ lorem }}
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat>Action 1</q-btn>
-        <q-btn flat>Action 2</q-btn>
+      <q-card-actions align="center">
+        <div class="q-gutter-sm">
+          <q-checkbox left-label v-model="left" label="Done" />
+        </div>
+        <q-btn flat>Remove</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -39,12 +23,16 @@
 import { Component, Vue } from "vue-property-decorator";
 @Component({})
 export default class ToDoCard extends Vue {
-  lorem = "This is just a test";
+  left = false;
 }
 </script>
 <style lang="scss">
 .my-card {
   width: 100%;
-  max-width: 250px;
+  max-width: 450px;
+}
+.card-info {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

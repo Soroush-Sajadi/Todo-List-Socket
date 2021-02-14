@@ -1,12 +1,18 @@
 <template>
   <div class="wrapper">
     <div class="lists-wrapper">
-      <div class="lists" v-for="list in lists" :key="list.name" @click="toDo">
+      <div
+        class="lists"
+        v-for="list in lists"
+        :id="list.name"
+        :key="list.name"
+        @click="toDo"
+      >
         {{ list.name }}
       </div>
     </div>
     <div class="toDos-wrapper">
-      <ToDos v-if="showToDo" />
+      <ToDos v-if="showToDo" :listName="listName" />
     </div>
   </div>
 </template>
@@ -21,13 +27,15 @@ export default class Lists extends Vue {
   @Prop() id: string;
   lists = [];
   showToDo = false;
+  listName = "";
 
   async created() {
     const lists = await getLists(this.id);
     this.lists = lists.data;
   }
 
-  toDo() {
+  toDo(event) {
+    this.listName = event.currentTarget.id;
     this.showToDo = true;
   }
 }
