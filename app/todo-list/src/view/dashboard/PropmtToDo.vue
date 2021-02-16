@@ -33,15 +33,17 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { addToDo } from "@/models/dashboard/dashboardService";
+import { uuid } from "vue-uuid";
 @Component({})
 export default class Prompt extends Vue {
   @Prop() prompt: boolean;
   @Prop() id: string;
   @Prop() value: string;
-  @Prop() listName: string;
+  @Prop() listId: string;
   date = null;
   show = false;
   newToDo = "";
+  toDoId = uuid.v1();
 
   get username() {
     return localStorage.username;
@@ -49,13 +51,14 @@ export default class Prompt extends Vue {
 
   addNewToDo() {
     const toDo = {
+      id: this.toDoId,
       author: this.username,
       text: this.newToDo,
       dateIssued: new Date(),
       dateDeadLine: new Date(this.date),
       complete: false
     };
-    addToDo(toDo, this.id, this.listName);
+    addToDo(toDo, this.id, this.listId);
     this.$emit("close", false);
   }
 

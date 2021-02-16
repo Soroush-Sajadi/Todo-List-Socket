@@ -4,7 +4,7 @@
       <div
         class="lists"
         v-for="list in lists"
-        :id="list.name"
+        :id="list.listId"
         :key="list.name"
         @click="toDo"
       >
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="toDos-wrapper">
-      <ToDos v-if="showToDo" :listName="listName" />
+      <ToDos v-if="showToDo" :listId="listId" :id="id" />
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default class Lists extends Vue {
   @Prop() id: string;
   lists = [];
   showToDo = false;
-  listName = "";
+  listId = "";
 
   async created() {
     const lists = await getLists(this.id);
@@ -35,7 +35,7 @@ export default class Lists extends Vue {
   }
 
   toDo(event) {
-    this.listName = event.currentTarget.id;
+    this.listId = event.currentTarget.id;
     this.showToDo = true;
   }
 }

@@ -15,7 +15,8 @@
       v-if="prompt"
       @close="onClose"
       v-model="newToDo"
-      :listName="listName"
+      :listId="listId"
+      :id="id"
     />
   </div>
 </template>
@@ -27,7 +28,8 @@ import ToDoCard from "./ToDoCard.vue";
   components: { PromptToDo, ToDoCard }
 })
 export default class ToDos extends Vue {
-  @Prop() listName: string;
+  @Prop() listId: string;
+  @Prop() id: string;
   prompt = false;
   newToDo = "";
 

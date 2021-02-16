@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -46,11 +46,11 @@ const logIn = (user, callBack) => {
     });
 };
 exports.logIn = logIn;
-const addList = (id, listName, callBack) => {
+const addList = (id, listName, listId, callBack) => {
     const objectId = new ObjectId(id);
     db.collection('users').update({ _id: objectId }, {
         $push: {
-            toDoLists: { name: listName, toDos: [] }
+            toDoLists: { name: listName, listId, toDos: [] }
         }
     });
 };
@@ -65,4 +65,13 @@ const getLists = (id, callBack) => {
     });
 };
 exports.getLists = getLists;
+const addToDo = (data, id, listId) => {
+    const objectId = new ObjectId(id);
+    db.collection('users').insertOne({ "_id": objectId, "toDoLists.id": listId }, {
+        $push: {
+            "toDoLists.$.toDos": { data }
+        }
+    });
+};
+exports.addToDo = addToDo;
 //# sourceMappingURL=mongoConnection.js.map

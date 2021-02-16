@@ -1,5 +1,5 @@
 import mongo from 'mongodb';
-import { SignIn, LogIn } from './interface'
+import { SignIn, LogIn, ToDo } from './interface'
 
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongo.MongoClient
@@ -41,13 +41,13 @@ export const logIn = (user: LogIn, callBack: any) => {
   })
 }
 
-export const addList = (id: string, listName: string, callBack: any) => {
+export const addList = (id: string, listName: string, listId: string ,callBack: any) => {
   const objectId = new ObjectId(id);
   db.collection('users').update(
     { _id: objectId },
     {
       $push: {
-        toDoLists: {name: listName, toDos:[]}
+        toDoLists: {name: listName, listId ,toDos:[]}
       }
     }
   )
@@ -60,5 +60,17 @@ export const getLists = (id: string, callBack: any) => {
     if (error) return console.log(error)
     return callBack(res[0].toDoLists)
   });
+}
+
+export const addToDo = (data: ToDo, id: string, listId: string) => {
+  const objectId = new ObjectId(id);
+  db.collection('users').update(
+    { _id: objectId, "toDoLists.listId": listId },
+    {
+      $push: {
+        "toDoLists.$.toDos":  data 
+      }
+    }
+  )
 }
 

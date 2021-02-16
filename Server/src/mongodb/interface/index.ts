@@ -8,6 +8,7 @@ export interface LogIn {
   password: string;
 }
 export interface ToDo {
+  id: string;
   author: string;
   text: string;
   dateIssued: Date;

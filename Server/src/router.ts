@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-console
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn, getLists, addList } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists, addList, addToDo } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
 
@@ -28,7 +28,8 @@ router.post('/api/account', (req, res) => {
 router.post('/api/list', (req, res) => {
   const list = req.body.list;
   const id = req.body.id
-  addList(id, list, (result: any) => {
+  const listId = req.body.listId
+  addList(id, list, listId, (result: any) => {
     res.json(result)
   })
 })
@@ -41,9 +42,10 @@ router.get('/api/list/:id', (req, res) => {
 })
 
 router.post('/api/list/todo', (req, res) => {
-  const data = req.body.data
-  // tslint:disable-next-line:no-console
-  console.log(data)
+  const data = req.body.data;
+  const id = req.body.id;
+  const listId = req.body.listId
+  addToDo(data, id, listId)
 })
 
 

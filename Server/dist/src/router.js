@@ -37,7 +37,8 @@ router.post('/api/account', (req, res) => {
 router.post('/api/list', (req, res) => {
     const list = req.body.list;
     const id = req.body.id;
-    mongoConnection_1.addList(id, list, (result) => {
+    const listId = req.body.listId;
+    mongoConnection_1.addList(id, list, listId, (result) => {
         res.json(result);
     });
 });
@@ -49,8 +50,9 @@ router.get('/api/list/:id', (req, res) => {
 });
 router.post('/api/list/todo', (req, res) => {
     const data = req.body.data;
-    // tslint:disable-next-line:no-console
-    console.log(data);
+    const id = req.body.id;
+    const listId = req.body.listId;
+    mongoConnection_1.addToDo(data, id, listId);
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map

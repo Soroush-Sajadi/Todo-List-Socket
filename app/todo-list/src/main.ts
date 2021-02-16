@@ -5,6 +5,9 @@ import router from "./router";
 import "./axios.ts";
 import "./components/index";
 import errorHandler from "./errorHandler";
+import UUID from "vue-uuid";
+
+Vue.use(UUID as any);
 
 Vue.config.productionTip = false;
 

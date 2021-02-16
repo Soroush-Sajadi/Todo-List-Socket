@@ -27,15 +27,17 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { addList } from "@/models/dashboard/dashboardService";
+import { uuid } from "vue-uuid";
 @Component({})
 export default class Prompt extends Vue {
   @Prop() prompt: boolean;
   @Prop() id: string;
   @Prop() value: string;
   newList = "";
+  listId = uuid.v1();
 
   addNewList() {
-    addList(this.newList, this.id);
+    addList(this.newList, this.id, this.listId);
     this.$emit("close", false);
   }
 
