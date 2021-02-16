@@ -1,8 +1,14 @@
 <template>
   <div>
     <Toolbar @add="newToDoList" />
-    <Prompt :prompt="prompt" v-if="prompt" @close="onClose" v-model="newList" />
-    <Lists :id="id" />
+    <Prompt
+      :prompt="prompt"
+      v-if="prompt"
+      @close="onClose"
+      v-model="newList"
+      :id="id"
+    />
+    <Lists :id="id" :list="newList" />
   </div>
 </template>
 <script lang="ts">

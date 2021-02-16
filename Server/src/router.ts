@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-console
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn, getLists } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists, addList, addToDo, getToDos } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
 
@@ -27,6 +27,11 @@ router.post('/api/account', (req, res) => {
 
 router.post('/api/list', (req, res) => {
   const list = req.body.list;
+  const id = req.body.id
+  const listId = req.body.listId
+  addList(id, list, listId, (result: any) => {
+    res.json(result)
+  })
 })
 
 router.get('/api/list/:id', (req, res) => {
@@ -34,6 +39,21 @@ router.get('/api/list/:id', (req, res) => {
   getLists(id, (result: any) => {
     res.json(result)
   })
+})
+
+router.post('/api/list/todo', (req, res) => {
+  const data = req.body.data;
+  const id = req.body.id;
+  const listId = req.body.listId
+  addToDo(data, id, listId)
+})
+
+router.get('/api/list/todos/:id/:listId', (req, res) => {
+  const id = req.params.id
+  const listId = req.params.listId
+  // tslint:disable-next-line:no-console
+  getToDos(id, listId)
+  // console.log(id, listId)
 })
 
 

@@ -36,12 +36,23 @@ router.post('/api/account', (req, res) => {
 });
 router.post('/api/list', (req, res) => {
     const list = req.body.list;
+    const id = req.body.id;
+    const listId = req.body.listId;
+    mongoConnection_1.addList(id, list, listId, (result) => {
+        res.json(result);
+    });
 });
 router.get('/api/list/:id', (req, res) => {
     const id = req.params.id;
     mongoConnection_1.getLists(id, (result) => {
         res.json(result);
     });
+});
+router.post('/api/list/todo', (req, res) => {
+    const data = req.body.data;
+    const id = req.body.id;
+    const listId = req.body.listId;
+    mongoConnection_1.addToDo(data, id, listId);
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map
