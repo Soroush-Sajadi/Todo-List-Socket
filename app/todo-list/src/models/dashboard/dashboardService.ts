@@ -17,3 +17,7 @@ export const addToDo = async (data: ToDo, id: string, listId: string) => {
     listId: listId
   });
 };
+
+export const getToDos = async (id: string, listId: string) => {
+  return await axios.get(`${baseUrl}/todos/${id}/${listId}`);
+};

@@ -3,7 +3,7 @@
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Your New ToDo List</div>
+          <div class="text-h6">Your New ToDo</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -18,7 +18,7 @@
         <div class="q-pa-md">
           <div @click="deadLine">Dead line: {{ date }}</div>
           <div v-if="show" class="q-gutter-md row items-start">
-            <q-date :value="value" @input="onInputDate" minimal />
+            <q-date :value="date" @input="onInputDate" minimal />
           </div>
         </div>
 
@@ -60,6 +60,7 @@ export default class Prompt extends Vue {
     };
     addToDo(toDo, this.id, this.listId);
     this.$emit("close", false);
+    this.$emit("toDo", toDo);
   }
 
   cancel() {
