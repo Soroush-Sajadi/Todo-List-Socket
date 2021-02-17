@@ -12,13 +12,13 @@
       </div>
     </div>
     <div class="toDos-wrapper">
-      <ToDos v-if="showToDo" :listId="listId" :id="id" />
+      <ToDos v-if="showToDo" :listId="listId" :id="id" :todos="todos" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { getLists } from "@/models/dashboard/dashboardService";
+import { getLists, getToDos } from "@/models/dashboard/dashboardService";
 import ToDos from "./ToDos.vue";
 @Component({
   components: { ToDos }
@@ -28,14 +28,17 @@ export default class Lists extends Vue {
   lists = [];
   showToDo = false;
   listId = "";
+  todos = [];
 
   async created() {
     const lists = await getLists(this.id);
     this.lists = lists.data;
   }
 
-  toDo(event) {
+  async toDo(event) {
     this.listId = event.currentTarget.id;
+    const result = await getToDos(this.id, event.currentTarget.id);
+    this.todos = result.data;
     this.showToDo = true;
   }
 }

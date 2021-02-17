@@ -51,9 +51,9 @@ router.post('/api/list/todo', (req, res) => {
 router.get('/api/list/todos/:id/:listId', (req, res) => {
   const id = req.params.id
   const listId = req.params.listId
-  // tslint:disable-next-line:no-console
-  getToDos(id, listId)
-  // console.log(id, listId)
+  getToDos(id, listId, (result: any) => {
+    res.json(result)
+  })
 })
 
 

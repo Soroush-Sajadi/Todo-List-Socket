@@ -1,9 +1,18 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -67,11 +76,29 @@ const getLists = (id, callBack) => {
 exports.getLists = getLists;
 const addToDo = (data, id, listId) => {
     const objectId = new ObjectId(id);
-    db.collection('users').insertOne({ "_id": objectId, "toDoLists.id": listId }, {
-        $push: {
-            "toDoLists.$.toDos": { data }
-        }
-    });
+    // db.collection('users').updateOne(
+    //   { _id: objectId, "toDoLists.listId": listId },
+    //   {
+    //     $push: {
+    //       "toDoLists.$.toDos":  data
+    //     }
+    //   }
+    // )
 };
 exports.addToDo = addToDo;
+const getToDos = (id, listId) => __awaiter(void 0, void 0, void 0, function* () {
+    const objectId = new ObjectId(id);
+    // db.collection('users').findOne( { _id: objectId, "toDoLists.listId": listId } ).toArray((error:any, res: any[]) => {
+    //   //  tslint:disable-next-line:no-console
+    //   if (error) return console.log(error)
+    //       //  tslint:disable-next-line:no-console
+    //       console.log(res[0].toDoLists)
+    //   // return callBack(res[0].toDoLists)
+    // });
+    // const a = await db.collection('users').findOne({ _id: objectId, "toDoLists.listId": listId })
+    const a = yield db.collection('users').findOne({ _id: objectId, "toDoLists": [{ "listId": listId }] });
+    //  tslint:disable-next-line:no-console
+    console.log(a, id, listId);
+});
+exports.getToDos = getToDos;
 //# sourceMappingURL=mongoConnection.js.map
