@@ -21,3 +21,11 @@ export const addToDo = async (data: ToDo, id: string, listId: string) => {
 export const getToDos = async (id: string, listId: string) => {
   return await axios.get(`${baseUrl}/todos/${id}/${listId}`);
 };
+
+export const deleteToDo = async (
+  id: string,
+  listId: string,
+  toDoId: string
+) => {
+  return await axios.delete(`${baseUrl}/todo/${id}/${listId}/${toDoId}`);
+};

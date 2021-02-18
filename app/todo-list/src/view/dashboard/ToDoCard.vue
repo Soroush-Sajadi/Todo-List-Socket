@@ -8,7 +8,28 @@
     >
       <q-card class="my-card">
         <q-card-section class="bg-primary text-white">
-          <div class="text-h6">{{ todo.text }}</div>
+          <div class="menuBar">
+            <div class="text-h6">{{ todo.text }}</div>
+            <div class="col-auto">
+              <q-btn color="white-7" round flat icon="more_vert">
+                <q-menu cover auto-close>
+                  <q-list>
+                    <q-item clickable>
+                      <q-item-section :id="todo.id" @click="editToDo"
+                        >Edit</q-item-section
+                      >
+                    </q-item>
+                    <q-item clickable>
+                      <q-item-section :id="todo.id" @click="removeToDo"
+                        >Remove</q-item-section
+                      >
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </div>
+          </div>
+
           <div class="card-info">
             <div class="text-subtitle3">by {{ todo.author }}</div>
             <div class="text-subtitle3">Issued: 2020/02/02</div>
@@ -29,10 +50,25 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ToDo } from "@/models/dashboard/todoModel";
+import { deleteToDo } from "@/models/dashboard/dashboardService";
 @Component({})
 export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
+  @Prop() listId: string;
+  @Prop() id: string;
   left = false;
+
+  created() {
+    console.log(this.todos);
+  }
+
+  editToDo(event) {
+    console.log(event.currentTarget.id);
+  }
+  async removeToDo(event) {
+    console.log(event.currentTarget.id);
+    await deleteToDo(this.id, this.listId, event.currentTarget.id);
+  }
 }
 </script>
 <style lang="scss">
@@ -41,6 +77,10 @@ export default class ToDoCard extends Vue {
   max-width: 450px;
 }
 .card-info {
+  display: flex;
+  justify-content: space-between;
+}
+.menuBar {
   display: flex;
   justify-content: space-between;
 }

@@ -9,7 +9,7 @@
       class="q-mr-xs add-todo"
       @click="toDosPrompt"
     />
-    <ToDoCard :todos="todos" />
+    <ToDoCard :todos="todos" :id="id" :listId="listId" />
     <PromptToDo
       :prompt="prompt"
       v-if="prompt"
