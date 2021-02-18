@@ -38,6 +38,7 @@ export default class Prompt extends Vue {
 
   addNewList() {
     addList(this.newList, this.id, this.listId);
+    this.$emit("list", { name: this.newList, listId: this.listId, toDos: [] });
     this.$emit("close", false);
   }
 

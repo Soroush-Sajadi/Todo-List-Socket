@@ -64,24 +64,23 @@ export const getLists = (id: string, callBack: any) => {
 
 export const addToDo = (data: ToDo, id: string, listId: string) => {
   const objectId = new ObjectId(id);
-  // db.collection('users').updateOne(
-  //   { _id: objectId, "toDoLists.listId": listId },
-  //   {
-  //     $push: {
-  //       "toDoLists.$.toDos":  data 
-  //     }
-  //   }
-  // )
+  db.collection('users').updateOne(
+    { _id: objectId, "toDoLists.listId": listId },
+    {
+      $push: {
+        "toDoLists.$.toDos":  data
+      }
+    }
+  )
 }
 
-export const getToDos = (id: string, listId: string ) => {
+export const getToDos = async (id: string, listId: string, callBack: any ) => {
   const objectId = new ObjectId(id);
-  db.collection('users').find({_id: objectId, "toDoLists.listId": listId }).toArray((error:any, res: any[]) => {
-    //  tslint:disable-next-line:no-console
-    if (error) return console.log(error)
-        //  tslint:disable-next-line:no-console
-        console.log(res)
-    // return callBack(res[0].toDoLists)
-  });
+  const lists = await db.collection('users').findOne({ _id : objectId })
+  lists.toDoLists.map( (list: any) => {
+    if (list.listId === listId) {
+      callBack(list.toDos)
+    }
+  })
 }
 

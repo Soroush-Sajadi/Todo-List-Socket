@@ -5,14 +5,16 @@
       :prompt="prompt"
       v-if="prompt"
       @close="onClose"
-      v-model="newList"
+      v-model="newListName"
       :id="id"
+      @list="list"
     />
-    <Lists :id="id" :list="newList" />
+    <Lists :id="id" :lists="lists" />
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { getLists } from "@/models/dashboard/dashboardService";
 import Toolbar from "./Toolbar.vue";
 import Prompt from "./Prompt.vue";
 import Lists from "./Lists.vue";
@@ -22,14 +24,17 @@ import Lists from "./Lists.vue";
 })
 export default class Dashboard extends Vue {
   prompt = false;
-  newList = "";
+  newListName = "";
+  lists = [];
 
   get id() {
     return localStorage.id;
   }
 
-  mounted() {
+  async mounted() {
     !localStorage.id ? this.$router.push({ path: "/login" }) : null;
+    const lists = await getLists(this.id);
+    this.lists = lists.data;
   }
 
   newToDoList(e) {
@@ -38,6 +43,11 @@ export default class Dashboard extends Vue {
 
   onClose(e) {
     this.prompt = e;
+  }
+
+  list(value) {
+    console.log(value);
+    this.lists.push(value);
   }
 }
 </script>

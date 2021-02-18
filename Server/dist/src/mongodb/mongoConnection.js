@@ -1,9 +1,18 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -67,11 +76,21 @@ const getLists = (id, callBack) => {
 exports.getLists = getLists;
 const addToDo = (data, id, listId) => {
     const objectId = new ObjectId(id);
-    db.collection('users').insertOne({ "_id": objectId, "toDoLists.id": listId }, {
+    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId }, {
         $push: {
-            "toDoLists.$.toDos": { data }
+            "toDoLists.$.toDos": data
         }
     });
 };
 exports.addToDo = addToDo;
+const getToDos = (id, listId, callBack) => __awaiter(void 0, void 0, void 0, function* () {
+    const objectId = new ObjectId(id);
+    const lists = yield db.collection('users').findOne({ _id: objectId });
+    lists.toDoLists.map((list) => {
+        if (list.listId === listId) {
+            callBack(list.toDos);
+        }
+    });
+});
+exports.getToDos = getToDos;
 //# sourceMappingURL=mongoConnection.js.map
