@@ -23,7 +23,6 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { getToDos } from "@/models/dashboard/dashboardService";
 import { ToDo } from "@/models/dashboard/todoModel";
 import PromptToDo from "./PropmtToDo.vue";
 import ToDoCard from "./ToDoCard.vue";
@@ -47,13 +46,6 @@ export default class ToDos extends Vue {
 
   toDo(val) {
     this.todos.push(val);
-  }
-
-  async mounted() {
-    const result = await getToDos(this.id, this.listId);
-    // this.todos.push(result.data);
-    // console.log(this.todos, result.data);
-    this.todos = result.data;
   }
 }
 </script>

@@ -76,29 +76,21 @@ const getLists = (id, callBack) => {
 exports.getLists = getLists;
 const addToDo = (data, id, listId) => {
     const objectId = new ObjectId(id);
-    // db.collection('users').updateOne(
-    //   { _id: objectId, "toDoLists.listId": listId },
-    //   {
-    //     $push: {
-    //       "toDoLists.$.toDos":  data
-    //     }
-    //   }
-    // )
+    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId }, {
+        $push: {
+            "toDoLists.$.toDos": data
+        }
+    });
 };
 exports.addToDo = addToDo;
-const getToDos = (id, listId) => __awaiter(void 0, void 0, void 0, function* () {
+const getToDos = (id, listId, callBack) => __awaiter(void 0, void 0, void 0, function* () {
     const objectId = new ObjectId(id);
-    // db.collection('users').findOne( { _id: objectId, "toDoLists.listId": listId } ).toArray((error:any, res: any[]) => {
-    //   //  tslint:disable-next-line:no-console
-    //   if (error) return console.log(error)
-    //       //  tslint:disable-next-line:no-console
-    //       console.log(res[0].toDoLists)
-    //   // return callBack(res[0].toDoLists)
-    // });
-    // const a = await db.collection('users').findOne({ _id: objectId, "toDoLists.listId": listId })
-    const a = yield db.collection('users').findOne({ _id: objectId, "toDoLists": [{ "listId": listId }] });
-    //  tslint:disable-next-line:no-console
-    console.log(a, id, listId);
+    const lists = yield db.collection('users').findOne({ _id: objectId });
+    lists.toDoLists.map((list) => {
+        if (list.listId === listId) {
+            callBack(list.toDos);
+        }
+    });
 });
 exports.getToDos = getToDos;
 //# sourceMappingURL=mongoConnection.js.map

@@ -57,9 +57,9 @@ router.post('/api/list/todo', (req, res) => {
 router.get('/api/list/todos/:id/:listId', (req, res) => {
     const id = req.params.id;
     const listId = req.params.listId;
-    // tslint:disable-next-line:no-console
-    mongoConnection_1.getToDos(id, listId);
-    // console.log(id, listId)
+    mongoConnection_1.getToDos(id, listId, (result) => {
+        res.json(result);
+    });
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map

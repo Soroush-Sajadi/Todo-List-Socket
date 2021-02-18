@@ -18,22 +18,17 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { getLists, getToDos } from "@/models/dashboard/dashboardService";
+import { getToDos } from "@/models/dashboard/dashboardService";
 import ToDos from "./ToDos.vue";
 @Component({
   components: { ToDos }
 })
 export default class Lists extends Vue {
   @Prop() id: string;
-  lists = [];
+  @Prop() lists: Array<any>;
   showToDo = false;
   listId = "";
   todos = [];
-
-  async created() {
-    const lists = await getLists(this.id);
-    this.lists = lists.data;
-  }
 
   async toDo(event) {
     this.listId = event.currentTarget.id;
