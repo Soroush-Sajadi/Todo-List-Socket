@@ -35,11 +35,11 @@ export const logIn = (user: LogIn, callBack: any) => {
     //  tslint:disable-next-line:no-console
     if (error) return console.log(error)
     if (res.length === 0) {
-      return callBack(false)
+      return callBack(false);
     }
-    return callBack(res)
+    return callBack(res);
   })
-}
+};
 
 export const addList = (id: string, listName: string, listId: string ,callBack: any) => {
   const objectId = new ObjectId(id);
@@ -51,7 +51,7 @@ export const addList = (id: string, listName: string, listId: string ,callBack: 
       }
     }
   )
-}
+};
 
 export const getLists = (id: string, callBack: any) => {
   const objectId = new ObjectId(id);
@@ -60,7 +60,7 @@ export const getLists = (id: string, callBack: any) => {
     if (error) return console.log(error)
     return callBack(res[0].toDoLists)
   });
-}
+};
 
 export const addToDo = (data: ToDo, id: string, listId: string) => {
   const objectId = new ObjectId(id);
@@ -72,7 +72,7 @@ export const addToDo = (data: ToDo, id: string, listId: string) => {
       }
     }
   )
-}
+};
 
 export const getToDos = async (id: string, listId: string, callBack: any ) => {
   const objectId = new ObjectId(id);
@@ -80,7 +80,17 @@ export const getToDos = async (id: string, listId: string, callBack: any ) => {
   lists.toDoLists.map( (list: any) => {
     if (list.listId === listId) {
       callBack(list.toDos)
-    }
-  })
+    };
+  });
+};
+
+export const deleteToDo = (id: string, listId: string, toDoId: string, callback: any) => {
+  const objectId = new ObjectId(id);
+  db.collection('users').updateOne(
+    { _id: objectId, "toDoLists.listId": listId },
+    { $pull: { 'toDoLists.$.toDos': { id: toDoId } } }
+  )
+  .then(() => callback(true))
+  .catch((err: Error) => callback(err));
 }
 

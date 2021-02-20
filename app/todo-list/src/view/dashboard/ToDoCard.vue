@@ -67,7 +67,8 @@ export default class ToDoCard extends Vue {
   }
   async removeToDo(event) {
     console.log(event.currentTarget.id);
-    await deleteToDo(this.id, this.listId, event.currentTarget.id);
+    const tes = await deleteToDo(this.id, this.listId, event.currentTarget.id);
+    console.log(tes);
   }
 }
 </script>
