@@ -50,12 +50,13 @@ export default class Prompt extends Vue {
   }
 
   addNewToDo() {
+    const deadLine = this.date === null ? null : new Date(this.date);
     const toDo = {
       id: this.toDoId,
       author: this.username,
       text: this.newToDo,
       dateIssued: new Date(),
-      dateDeadLine: new Date(this.date),
+      dateDeadLine: deadLine,
       complete: false
     };
     addToDo(toDo, this.id, this.listId);

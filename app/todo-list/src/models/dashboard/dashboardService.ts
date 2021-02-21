@@ -29,3 +29,14 @@ export const deleteToDo = async (
 ) => {
   return await axios.delete(`${baseUrl}/todo/${id}/${listId}/${toDoId}`);
 };
+
+export const removeToDo = (toDoId, toDos) => {
+  console.log(toDos);
+  toDos.map((toDo, index) => {
+    console.log(toDo.id, toDoId);
+
+    if (toDo.id === toDoId) {
+      toDos.splice(index, 1);
+    }
+  });
+};

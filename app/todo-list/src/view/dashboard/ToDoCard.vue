@@ -32,16 +32,30 @@
 
           <div class="card-info">
             <div class="text-subtitle3">by {{ todo.author }}</div>
-            <div class="text-subtitle3">Issued: 2020/02/02</div>
-            <div class="text-subtitle3">Dead line: 2020/02/03</div>
+            <div class="text-subtitle3">
+              Issued: {{ todo.dateIssued | formatDate }}
+            </div>
+            <div class="text-subtitle3">
+              Dead line:
+              {{
+                todo.dateDeadLine === null
+                  ? "No Dead Line"
+                  : todo.dateDeadLine | formatDate
+              }}
+            </div>
           </div>
         </q-card-section>
 
         <q-card-actions align="center">
           <div class="q-gutter-sm">
-            <q-checkbox left-label v-model="left" label="Done" />
+            <q-checkbox
+              left-label
+              v-model="todo.complete"
+              label="Done"
+              :id="todo.id"
+              @click="checked"
+            />
           </div>
-          <q-btn flat>Remove</q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -50,7 +64,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ToDo } from "@/models/dashboard/todoModel";
-import { deleteToDo } from "@/models/dashboard/dashboardService";
+import { deleteToDo, removeToDo } from "@/models/dashboard/dashboardService";
 @Component({})
 export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
@@ -58,17 +72,16 @@ export default class ToDoCard extends Vue {
   @Prop() id: string;
   left = false;
 
-  created() {
-    console.log(this.todos);
-  }
-
   editToDo(event) {
     console.log(event.currentTarget.id);
   }
   async removeToDo(event) {
-    console.log(event.currentTarget.id);
-    const tes = await deleteToDo(this.id, this.listId, event.currentTarget.id);
-    console.log(tes);
+    const toDoId = event.currentTarget.id;
+    const result = await deleteToDo(this.id, this.listId, toDoId);
+    result.data === true ? removeToDo(toDoId, this.todos) : null;
+  }
+  async checked(event) {
+    console.log("asd", event.currentTarget.id);
   }
 }
 </script>
