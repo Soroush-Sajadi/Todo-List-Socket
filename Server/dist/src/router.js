@@ -61,5 +61,20 @@ router.get('/api/list/todos/:id/:listId', (req, res) => {
         res.json(result);
     });
 });
+router.delete('/api/list/todo/:id/:listId/:toDoId', (req, res) => {
+    const id = req.params.id;
+    const listId = req.params.listId;
+    const toDoId = req.params.toDoId;
+    mongoConnection_1.deleteToDo(id, listId, toDoId, (result) => {
+        res.json(result);
+    });
+});
+router.put('/api/list/todo/checked', (req, res) => {
+    const id = req.body.id;
+    const listId = req.body.listId;
+    const toDoId = req.body.toDoId;
+    // tslint:disable-next-line:no-console
+    console.log(id, listId, toDoId);
+});
 exports.default = router;
 //# sourceMappingURL=router.js.map

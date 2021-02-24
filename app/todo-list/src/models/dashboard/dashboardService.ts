@@ -40,3 +40,17 @@ export const removeToDo = (toDoId, toDos) => {
     }
   });
 };
+
+export const checkedToDo = async (
+  id: string,
+  listId: string,
+  toDoId: string,
+  complete: boolean
+) => {
+  return await axios.put(`${baseUrl}/todo/checked`, {
+    id: id,
+    listId: listId,
+    toDoId: toDoId,
+    complete: complete
+  });
+};

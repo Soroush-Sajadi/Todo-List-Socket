@@ -92,5 +92,18 @@ export const deleteToDo = (id: string, listId: string, toDoId: string, callback:
   )
   .then(() => callback(true))
   .catch((err: Error) => callback(err));
+};
+
+export const checkedToDo = (id: string, listId: string, toDoId: string, complete: boolean) => {
+  const objectId = new ObjectId(id);
+  db.collection('users').updateOne(
+    { _id: objectId, "toDoLists.listId": listId, "toDoLists.toDos.id": toDoId },
+    {
+      $set: {
+        "toDoLists.$.toDos.$.complete":  complete
+      }
+    }
+  )
+
 }
 

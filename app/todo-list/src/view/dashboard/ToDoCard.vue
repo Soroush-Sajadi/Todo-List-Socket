@@ -53,7 +53,7 @@
               v-model="todo.complete"
               label="Done"
               :id="todo.id"
-              @click="checked"
+              @input="isChecked(todo.id, todo.complete)"
             />
           </div>
         </q-card-actions>
@@ -64,24 +64,30 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ToDo } from "@/models/dashboard/todoModel";
-import { deleteToDo, removeToDo } from "@/models/dashboard/dashboardService";
+import {
+  deleteToDo,
+  removeToDo,
+  checkedToDo
+} from "@/models/dashboard/dashboardService";
 @Component({})
 export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
   @Prop() listId: string;
   @Prop() id: string;
-  left = false;
 
   editToDo(event) {
     console.log(event.currentTarget.id);
   }
+
   async removeToDo(event) {
     const toDoId = event.currentTarget.id;
     const result = await deleteToDo(this.id, this.listId, toDoId);
     result.data === true ? removeToDo(toDoId, this.todos) : null;
   }
-  async checked(event) {
-    console.log("asd", event.currentTarget.id);
+
+  async isChecked(toDoId, complete) {
+    const result = await checkedToDo(this.id, this.listId, toDoId, complete);
+    console.log(result);
   }
 }
 </script>

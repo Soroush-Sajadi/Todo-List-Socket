@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.deleteToDo = exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -90,7 +90,17 @@ const getToDos = (id, listId, callBack) => __awaiter(void 0, void 0, void 0, fun
         if (list.listId === listId) {
             callBack(list.toDos);
         }
+        ;
     });
 });
 exports.getToDos = getToDos;
+const deleteToDo = (id, listId, toDoId, callback) => {
+    const objectId = new ObjectId(id);
+    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId }, { $pull: { 'toDoLists.$.toDos': { id: toDoId } } })
+        .then(() => callback(true))
+        .catch((err) => callback(err));
+};
+exports.deleteToDo = deleteToDo;
+// export const checkedToDo = (id: string) => {
+// }
 //# sourceMappingURL=mongoConnection.js.map

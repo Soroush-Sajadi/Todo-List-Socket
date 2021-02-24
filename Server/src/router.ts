@@ -64,5 +64,14 @@ router.delete('/api/list/todo/:id/:listId/:toDoId', (req, res) => {
   });
 });
 
+router.put('/api/list/todo/checked', (req, res) => {
+  const id = req.body.id
+  const listId = req.body.listId;
+  const toDoId = req.body.toDoId
+  const complete = req.body.complete
+  // tslint:disable-next-line:no-console
+  console.log(id, listId, toDoId, complete);
+});
+
 
 export default router;
