@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteToDo = exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.checkedToDo = exports.deleteToDo = exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -101,6 +101,14 @@ const deleteToDo = (id, listId, toDoId, callback) => {
         .catch((err) => callback(err));
 };
 exports.deleteToDo = deleteToDo;
-// export const checkedToDo = (id: string) => {
-// }
+const checkedToDo = (id, listId, toDoId, complete) => {
+    const objectId = new ObjectId(id);
+    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId, "toDoList.toDos.id": toDoId }, {
+        $set: {
+            "toDoList.0.toDos.$.complete": { complete }
+        }
+    }, { upsert: true });
+};
+exports.checkedToDo = checkedToDo;
+// { attachments: { $elemMatch: { _id: ObjectId("5a983da6201ba5a2302fb38f") } } } )
 //# sourceMappingURL=mongoConnection.js.map

@@ -100,10 +100,17 @@ export const checkedToDo = (id: string, listId: string, toDoId: string, complete
     { _id: objectId, "toDoLists.listId": listId, "toDoLists.toDos.id": toDoId },
     {
       $set: {
-        "toDoLists.$.toDos.$.complete":  complete
+        "toDoLists.$.toDos.$[toDo].complete":  complete
       }
+    },
+    {
+      arrayFilters: [
+        {
+          "toDo.id": { 
+            $eq: toDoId
+          }
+        }
+      ]
     }
   )
-
-}
-
+};

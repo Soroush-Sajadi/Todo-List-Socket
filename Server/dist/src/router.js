@@ -73,8 +73,8 @@ router.put('/api/list/todo/checked', (req, res) => {
     const id = req.body.id;
     const listId = req.body.listId;
     const toDoId = req.body.toDoId;
-    // tslint:disable-next-line:no-console
-    console.log(id, listId, toDoId);
+    const complete = req.body.complete;
+    mongoConnection_1.checkedToDo(id, listId, toDoId, complete);
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map
