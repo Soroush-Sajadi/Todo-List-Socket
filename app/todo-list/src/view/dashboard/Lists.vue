@@ -1,15 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="lists-wrapper">
-      <div
-        class="lists"
-        v-for="list in lists"
-        :id="list.listId"
-        :key="list.name"
-        @click="toDo"
-      >
-        {{ list.name }}
-      </div>
+      <ListView :lists="lists" @toDo="toDo" />
     </div>
     <div class="toDos-wrapper">
       <ToDos v-if="showToDo" :listId="listId" :id="id" :todos="todos" />
@@ -20,8 +12,9 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { getToDos } from "@/models/dashboard/dashboardService";
 import ToDos from "./ToDos.vue";
+import ListView from "./ListView.vue";
 @Component({
-  components: { ToDos }
+  components: { ToDos, ListView }
 })
 export default class Lists extends Vue {
   @Prop() id: string;
@@ -30,10 +23,10 @@ export default class Lists extends Vue {
   listId = "";
   todos = [];
 
-  async toDo(event) {
-    this.listId = event.currentTarget.id;
-    const result = await getToDos(this.id, event.currentTarget.id);
+  async toDo(listId) {
+    const result = await getToDos(this.id, listId);
     this.todos = result.data;
+    this.listId = listId;
     this.showToDo = true;
   }
 }
@@ -41,6 +34,7 @@ export default class Lists extends Vue {
 <style lang="scss">
 .lists-wrapper {
   width: 50%;
+  display: flex;
 }
 .wrapper {
   display: flex;
