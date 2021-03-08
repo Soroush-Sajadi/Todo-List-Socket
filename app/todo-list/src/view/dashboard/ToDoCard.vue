@@ -15,7 +15,9 @@
                 <q-menu cover auto-close>
                   <q-list>
                     <q-item clickable>
-                      <q-item-section :id="todo.id" @click="editToDo"
+                      <q-item-section
+                        :id="todo.id"
+                        @click="editToDo(todo.dateDeadLine, todo.text, todo.id)"
                         >Edit</q-item-section
                       >
                     </q-item>
@@ -59,6 +61,16 @@
         </q-card-actions>
       </q-card>
     </div>
+    <div v-if="prompt">
+      <PromptEdit
+        :prompt="prompt"
+        :deadLine="deadLine"
+        :toDoId="toDoId"
+        :id="id"
+        :listId="listId"
+        v-model="text"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -69,14 +81,24 @@ import {
   removeToDo,
   checkedToDo
 } from "@/models/dashboard/dashboardService";
-@Component({})
+import PromptEdit from "./PromptEdit.vue";
+@Component({
+  components: { PromptEdit }
+})
 export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
   @Prop() listId: string;
   @Prop() id: string;
+  prompt = false;
+  deadLine = "";
+  text = "";
+  toDoId = "";
 
-  editToDo(event) {
-    console.log(event.currentTarget.id);
+  editToDo(deadLine, text, toDoId) {
+    this.prompt = true;
+    this.deadLine = deadLine;
+    this.text = text;
+    this.toDoId = toDoId;
   }
 
   async removeToDo(event) {

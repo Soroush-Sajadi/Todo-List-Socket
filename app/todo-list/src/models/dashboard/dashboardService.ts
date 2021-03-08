@@ -54,3 +54,19 @@ export const checkedToDo = async (
     complete: complete
   });
 };
+
+export const editToDo = async (
+  id: string,
+  listId: string,
+  toDoId: string,
+  text: string,
+  deadLine: Date
+) => {
+  return await axios.put(`${baseUrl}/todo/edit`, {
+    id: id,
+    listId: listId,
+    toDoId: toDoId,
+    text: text,
+    deadLine: deadLine
+  });
+};
