@@ -117,7 +117,6 @@ export default class ToDoCard extends Vue {
   edit(val) {
     toDoEdit(this.todos, val);
     this.prompt = false;
-    // console.log(val);
   }
 }
 </script>
