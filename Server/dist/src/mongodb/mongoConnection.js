@@ -103,12 +103,19 @@ const deleteToDo = (id, listId, toDoId, callback) => {
 exports.deleteToDo = deleteToDo;
 const checkedToDo = (id, listId, toDoId, complete) => {
     const objectId = new ObjectId(id);
-    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId, "toDoList.toDos.id": toDoId }, {
+    db.collection('users').updateOne({ _id: objectId, "toDoLists.listId": listId, "toDoLists.toDos.id": toDoId }, {
         $set: {
-            "toDoList.0.toDos.$.complete": { complete }
+            "toDoLists.$.toDos.$[toDo].complete": complete
         }
-    }, { upsert: true });
+    }, {
+        arrayFilters: [
+            {
+                "toDo.id": {
+                    $eq: toDoId
+                }
+            }
+        ]
+    });
 };
 exports.checkedToDo = checkedToDo;
-// { attachments: { $elemMatch: { _id: ObjectId("5a983da6201ba5a2302fb38f") } } } )
 //# sourceMappingURL=mongoConnection.js.map

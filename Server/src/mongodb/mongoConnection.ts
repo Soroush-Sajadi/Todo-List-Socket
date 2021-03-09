@@ -1,5 +1,5 @@
 import mongo from 'mongodb';
-import { SignIn, LogIn, ToDo } from './interface'
+import { SignIn, LogIn, ToDo, ToDoEdit } from './interface'
 
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongo.MongoClient
@@ -106,11 +106,35 @@ export const checkedToDo = (id: string, listId: string, toDoId: string, complete
     {
       arrayFilters: [
         {
-          "toDo.id": { 
+          "toDo.id": {
             $eq: toDoId
           }
         }
       ]
     }
   )
+};
+
+export const editToDo = (data: ToDoEdit, callback: any) => {
+  const objectId = new ObjectId(data.id);
+  db.collection('users').updateOne(
+    { _id: objectId, "toDoLists.listId": data.listId, "toDoLists.toDos.id": data.toDoId },
+    {
+      $set: {
+        "toDoLists.$.toDos.$[toDo].text":  data.text,
+        "toDoLists.$.toDos.$[toDo].dateDeadLine":  data.deadLine
+      }
+    },
+    {
+      arrayFilters: [
+        {
+          "toDo.id": {
+            $eq: data.toDoId
+          }
+        }
+      ]
+    }
+  )
+  .then(() => callback(true))
+  .catch((err: Error) => callback(err))
 };

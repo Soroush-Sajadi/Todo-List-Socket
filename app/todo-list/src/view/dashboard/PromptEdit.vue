@@ -48,8 +48,17 @@ export default class PromptEdit extends Vue {
   cancel() {
     console.log("cancel");
   }
-  edit() {
-    console.log(this.value, this.deadLine);
+  async edit() {
+    const data = {
+      id: this.id,
+      listId: this.listId,
+      toDoId: this.toDoId,
+      text: this.value,
+      deadLine: new Date(this.deadLine)
+    };
+    const result = await editToDo(data);
+    result.data === true ? this.$emit("edit", data) : null;
+    console.log(result);
   }
   showDeadLine() {
     console.log("deadLine");

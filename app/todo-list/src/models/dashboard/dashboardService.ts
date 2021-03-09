@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ToDo } from "./todoModel";
+import { ToDo, ToDoEdit } from "./todoModel";
 
 const baseUrl = "http://localhost:5000/api/list";
 export const addList = async (data: string, id: string, listId: string) => {
@@ -55,18 +55,19 @@ export const checkedToDo = async (
   });
 };
 
-export const editToDo = async (
-  id: string,
-  listId: string,
-  toDoId: string,
-  text: string,
-  deadLine: Date
-) => {
+export const editToDo = async (data: ToDoEdit) => {
   return await axios.put(`${baseUrl}/todo/edit`, {
-    id: id,
-    listId: listId,
-    toDoId: toDoId,
-    text: text,
-    deadLine: deadLine
+    data: data
+  });
+};
+
+export const toDoEdit = (toDos: Array<ToDo>, editToDo: ToDoEdit) => {
+  console.log(toDos, editToDo);
+  return toDos.map(toDo => {
+    if (toDo.id === editToDo.toDoId) {
+      toDo.text = editToDo.text;
+      toDo.dateDeadLine = editToDo.deadLine;
+    }
+    return toDos;
   });
 };

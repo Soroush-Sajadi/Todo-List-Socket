@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-console
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo, editToDo } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
   res.json('hi');
@@ -70,6 +70,12 @@ router.put('/api/list/todo/checked', (req, res) => {
   const toDoId = req.body.toDoId
   const complete = req.body.complete
   checkedToDo(id, listId, toDoId, complete)
+});
+
+router.put('/api/list/todo/edit', (req, res) => {
+  editToDo(req.body.data,(result: any) => {
+    res.json(result);
+  });
 });
 
 

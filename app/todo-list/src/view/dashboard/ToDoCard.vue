@@ -68,6 +68,7 @@
         :toDoId="toDoId"
         :id="id"
         :listId="listId"
+        @edit="edit"
         v-model="text"
       />
     </div>
@@ -79,7 +80,8 @@ import { ToDo } from "@/models/dashboard/todoModel";
 import {
   deleteToDo,
   removeToDo,
-  checkedToDo
+  checkedToDo,
+  toDoEdit
 } from "@/models/dashboard/dashboardService";
 import PromptEdit from "./PromptEdit.vue";
 @Component({
@@ -110,6 +112,12 @@ export default class ToDoCard extends Vue {
   async isChecked(toDoId, complete) {
     const result = await checkedToDo(this.id, this.listId, toDoId, complete);
     console.log(result);
+  }
+
+  edit(val) {
+    toDoEdit(this.todos, val);
+    this.prompt = false;
+    // console.log(val);
   }
 }
 </script>
