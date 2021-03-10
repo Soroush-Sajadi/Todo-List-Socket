@@ -76,5 +76,10 @@ router.put('/api/list/todo/checked', (req, res) => {
     const complete = req.body.complete;
     mongoConnection_1.checkedToDo(id, listId, toDoId, complete);
 });
+router.put('/api/list/todo/edit', (req, res) => {
+    mongoConnection_1.editToDo(req.body.data, (result) => {
+        res.json(result);
+    });
+});
 exports.default = router;
 //# sourceMappingURL=router.js.map

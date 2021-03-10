@@ -10,31 +10,31 @@
       label="ToDos Lists"
       @click="onMainClick"
     >
-      <div class="lists" v-for="list in lists" :key="list.listId">
+      <div v-for="list in lists" :key="list.listId">
         <q-list>
-          <q-item
-            clickable
-            v-close-popup
-            :id="list.listId"
-            @click="onItemClick"
-          >
-            <q-item-section avatar>
-              <q-avatar icon="folder" color="primary" text-color="white" />
-            </q-item-section>
-            <q-item-section>
+          <q-item clickable v-close-popup>
+            <q-item-section :id="list.listId" @click="onItemClick">
               <q-item-label>{{ list.name }}</q-item-label>
+            </q-item-section>
+            <q-item-section :id="list.listId" @click="onShareClick" side>
+              <q-item-label>Share</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
       </div>
     </q-btn-dropdown>
+    <PromptShare :prompt="prompt" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-@Component({})
+import PromptShare from "./PromptShare.vue";
+@Component({
+  components: { PromptShare }
+})
 export default class ListView extends Vue {
   @Prop() lists: Array<any>;
+  prompt = false;
   onMainClick() {
     console.log("Clicked on main button");
   }
@@ -42,5 +42,15 @@ export default class ListView extends Vue {
   onItemClick(event) {
     this.$emit("toDo", event.currentTarget.id);
   }
+
+  onShareClick(event) {
+    this.prompt = true;
+    console.log("F", event.currentTarget.id);
+  }
 }
 </script>
+<style lang="scss">
+.lists {
+  display: flex;
+}
+</style>
