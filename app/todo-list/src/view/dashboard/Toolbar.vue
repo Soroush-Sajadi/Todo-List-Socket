@@ -14,7 +14,15 @@
           class="q-mr-xs"
           @click="addToDoList"
         />
-        <q-btn flat round dense icon="more_vert" />
+        <q-btn flat round dense icon="more_vert">
+          <q-menu cover auto-close>
+            <q-list>
+              <q-item clickable>
+                <q-item-section @click="logOut">Log Out</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </div>
   </div>
@@ -25,6 +33,10 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 export default class Toolbar extends Vue {
   addToDoList() {
     this.$emit("add", true);
+  }
+  logOut() {
+    localStorage.removeItem("id");
+    this.$router.push({ path: "/login" });
   }
 }
 </script>
