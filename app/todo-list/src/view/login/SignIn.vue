@@ -4,7 +4,7 @@
       type="text"
       name="Username"
       v-model="username"
-      :rules="validation.username"
+      :rules="validation.notEmpty"
     />
     <a-input
       type="email"

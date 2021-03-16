@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as EmailValidator from "email-validator";
 import passwordValidator from "password-validator";
 
-export const required = (val, errorText = "Choose a username") => {
+export const required = (val, errorText = "This field can NOT be empty") => {
   return !_.isEmpty(val) || errorText;
 };
 
@@ -31,5 +31,5 @@ export const validatePassword = (
 export default {
   email: [val => validateEmail(val)],
   password: [val => validatePassword(val)],
-  username: [val => required(val)]
+  notEmpty: [val => required(val)]
 };
