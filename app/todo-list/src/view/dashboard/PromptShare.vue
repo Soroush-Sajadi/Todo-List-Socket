@@ -10,15 +10,14 @@
           <q-input
             dense
             autofocus
-            :value="value"
             @input="onInput"
-            @keyup.enter="addNewList"
+            @keyup.enter="share"
           ></q-input>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup @click="cancel"></q-btn>
-          <q-btn flat label="Add" v-close-popup @click="addNewList"></q-btn>
+          <q-btn flat label="Share" v-close-popup @click="share"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -29,5 +28,18 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 @Component({})
 export default class PromptShare extends Vue {
   @Prop() prompt: boolean;
+  user = "";
+
+  onInput(val) {
+    this.user = val;
+    console.log(val);
+  }
+  cancel() {
+    this.$emit("close", false);
+  }
+  share() {
+    console.log(this.user);
+    this.$emit("close", false);
+  }
 }
 </script>

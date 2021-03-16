@@ -23,7 +23,7 @@
         </q-list>
       </div>
     </q-btn-dropdown>
-    <PromptShare :prompt="prompt" />
+    <PromptShare :prompt="prompt" @close="close" />
   </div>
 </template>
 <script lang="ts">
@@ -46,6 +46,9 @@ export default class ListView extends Vue {
   onShareClick(event) {
     this.prompt = true;
     console.log("F", event.currentTarget.id);
+  }
+  close(val) {
+    this.prompt = val;
   }
 }
 </script>
