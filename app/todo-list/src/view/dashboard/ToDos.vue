@@ -9,7 +9,9 @@
       class="q-mr-xs add-todo"
       @click="toDosPrompt"
     />
-    <ToDoCard :todos="todos" />
+    <div class="toDo-wrapper">
+      <ToDoCard :todos="todos" :id="id" :listId="listId" />
+    </div>
     <PromptToDo
       :prompt="prompt"
       v-if="prompt"
@@ -50,6 +52,10 @@ export default class ToDos extends Vue {
 }
 </script>
 <style lang="scss">
+.toDo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 .add-todo {
   float: right;
   margin-right: 5%;
