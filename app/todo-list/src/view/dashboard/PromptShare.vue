@@ -10,14 +10,15 @@
           <q-input
             dense
             autofocus
+            :rules="validation.notEmpty"
             @input="onInput"
             @keyup.enter="share"
           ></q-input>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancel" v-close-popup @click="cancel"></q-btn>
-          <q-btn flat label="Share" v-close-popup @click="share"></q-btn>
+          <q-btn flat label="Cancel" @click="cancel"></q-btn>
+          <q-btn flat label="Share" @click="share"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -25,11 +26,15 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { validation } from "../common";
 @Component({})
 export default class PromptShare extends Vue {
   @Prop() prompt: boolean;
   user = "";
 
+  get validation() {
+    return validation;
+  }
   onInput(val) {
     this.user = val;
     console.log(val);
@@ -38,8 +43,10 @@ export default class PromptShare extends Vue {
     this.$emit("close", false);
   }
   share() {
-    console.log(this.user);
-    this.$emit("close", false);
+    if (this.user.length > 0) {
+      console.log(this.user);
+      this.$emit("close", false);
+    }
   }
 }
 </script>
