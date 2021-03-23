@@ -62,7 +62,6 @@ export const editToDo = async (data: ToDoEdit) => {
 };
 
 export const toDoEdit = (toDos: Array<ToDo>, editToDo: ToDoEdit) => {
-  console.log(toDos, editToDo);
   return toDos.map(toDo => {
     if (toDo.id === editToDo.toDoId) {
       toDo.text = editToDo.text;
@@ -70,4 +69,8 @@ export const toDoEdit = (toDos: Array<ToDo>, editToDo: ToDoEdit) => {
     }
     return toDos;
   });
+};
+
+export const toDoShare = async (toDos: Array<ToDo>, email: string) => {
+  return await axios.get(`${baseUrl}/todo/share/${toDos}/${email}`);
 };
