@@ -78,5 +78,12 @@ router.put('/api/list/todo/edit', (req, res) => {
   });
 });
 
+router.get('/api/list/todo/share/:todo/:email', (req, res) => {
+  const email = req.params.email;
+  const todo = req.params.todo;
+  // tslint:disable-next-line:no-console
+  console.log(todo, email);
+})
+
 
 export default router;
