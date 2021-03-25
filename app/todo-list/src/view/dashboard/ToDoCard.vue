@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div @click="onShareClick">Share</div>
     <div
       v-for="todo in todos"
       :id="todo.id"
@@ -72,11 +73,16 @@
         v-model="text"
       />
     </div>
+    <div v-if="promptShare">
+      <PromptShare :prompt="promptShare" @close="close" @share="share" />
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { ToDo } from "@/models/dashboard/todoModel";
+import { toDoShare } from "@/models/dashboard/dashboardService";
+
 import {
   deleteToDo,
   removeToDo,
@@ -84,14 +90,17 @@ import {
   toDoEdit
 } from "@/models/dashboard/dashboardService";
 import PromptEdit from "./PromptEdit.vue";
+import PromptShare from "./PromptShare.vue";
+
 @Component({
-  components: { PromptEdit }
+  components: { PromptEdit, PromptShare }
 })
 export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
   @Prop() listId: string;
   @Prop() id: string;
   prompt = false;
+  promptShare = false;
   deadLine = "";
   text = "";
   toDoId = "";
@@ -117,6 +126,20 @@ export default class ToDoCard extends Vue {
   edit(val) {
     toDoEdit(this.todos, val);
     this.prompt = false;
+  }
+
+  onShareClick() {
+    this.promptShare = true;
+    console.log(this.promptShare);
+  }
+
+  async share(email) {
+    this.promptShare = false;
+    await toDoShare(this.todos, email);
+  }
+
+  close(val) {
+    this.prompt = val;
   }
 }
 </script>

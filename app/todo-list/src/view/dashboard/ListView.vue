@@ -23,14 +23,12 @@
         </q-list>
       </div>
     </q-btn-dropdown>
-    <PromptShare :prompt="prompt" @close="close" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import PromptShare from "./PromptShare.vue";
 @Component({
-  components: { PromptShare }
+  components: {}
 })
 export default class ListView extends Vue {
   @Prop() lists: Array<any>;
@@ -47,6 +45,7 @@ export default class ListView extends Vue {
     this.prompt = true;
     console.log("F", event.currentTarget.id);
   }
+
   close(val) {
     this.prompt = val;
   }
