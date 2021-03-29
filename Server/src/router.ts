@@ -1,7 +1,8 @@
 // tslint:disable-next-line:no-console
+import { json } from 'body-parser';
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo, editToDo } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo, editToDo, shareToDos } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
   res.json('hi');
@@ -78,11 +79,11 @@ router.put('/api/list/todo/edit', (req, res) => {
   });
 });
 
-router.get('/api/list/todo/share/:todo/:email', (req, res) => {
+router.get('/api/list/todo/share/:todos/:email', (req, res) => {
   const email = req.params.email;
-  const todo = req.params.todo;
-  // tslint:disable-next-line:no-console
-  console.log(todo, email);
+  const todos = req.params.todos;
+
+  shareToDos(JSON.parse(todos), email)
 })
 
 

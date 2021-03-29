@@ -42,10 +42,10 @@ export default class PromptShare extends Vue {
   cancel() {
     this.$emit("close", false);
   }
+
   share() {
     if (this.user.length > 0) {
-      console.log(this.user);
-      this.$emit("close", false);
+      this.$emit("share", this.user);
     }
   }
 }
