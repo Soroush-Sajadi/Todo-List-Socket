@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// tslint:disable-next-line:no-console
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const mongoConnection_1 = require("./mongodb/mongoConnection");
@@ -80,6 +79,13 @@ router.put('/api/list/todo/edit', (req, res) => {
     mongoConnection_1.editToDo(req.body.data, (result) => {
         res.json(result);
     });
+});
+router.get('/api/list/todo/share/:todos/:email', (req, res) => {
+    const email = req.params.email;
+    const todos = req.params.todos;
+    const a = JSON.parse(todos);
+    // tslint:disable-next-line:no-console
+    console.log(a);
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map

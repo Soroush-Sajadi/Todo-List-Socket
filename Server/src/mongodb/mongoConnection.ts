@@ -138,3 +138,16 @@ export const editToDo = (data: ToDoEdit, callback: any) => {
   .then(() => callback(true))
   .catch((err: Error) => callback(err))
 };
+
+export const shareToDos = (data: Array<ToDo>, email: string) => {
+  console.log(data, email)
+  db.collection('users').updateOne(
+    { email: email, },
+    {
+      $push: {
+        "toDoLists":  {name: "test", listId:"123-123-123", toDos: data }
+      }
+    }
+  )
+
+}
