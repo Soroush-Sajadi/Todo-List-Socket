@@ -1,5 +1,5 @@
 import mongo from 'mongodb';
-import { SignIn, LogIn, ToDo, ToDoEdit } from './interface'
+import { SignIn, LogIn, ToDo, ToDoEdit, ToDosInfo } from './interface'
 
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongo.MongoClient
@@ -139,13 +139,12 @@ export const editToDo = (data: ToDoEdit, callback: any) => {
   .catch((err: Error) => callback(err))
 };
 
-export const shareToDos = (data: Array<ToDo>, email: string) => {
-  console.log(data, email)
+export const shareToDos = (data: ToDosInfo) => {
   db.collection('users').updateOne(
-    { email: email, },
+    { email: data.email, },
     {
       $push: {
-        "toDoLists":  {name: "test", listId:"123-123-123", toDos: data }
+        "toDoLists":  {name: data.listName, listId:data.listId, toDos: data.toDos }
       }
     }
   )

@@ -10,7 +10,7 @@
       @click="toDosPrompt"
     />
     <div class="toDo-wrapper">
-      <ToDoCard :todos="todos" :id="id" :listId="listId" />
+      <ToDoCard :todos="todos" :id="id" :listId="listId" :listName="listName" />
     </div>
     <PromptToDo
       :prompt="prompt"
@@ -35,6 +35,7 @@ export default class ToDos extends Vue {
   @Prop() listId: string;
   @Prop() id: string;
   @Prop() todos: Array<ToDo>;
+  @Prop() listName: string;
   prompt = false;
   newToDo = "";
 

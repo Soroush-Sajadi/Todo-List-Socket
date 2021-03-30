@@ -22,3 +22,10 @@ export interface ToDoEdit {
   text: string;
   deadLine: Date;
 }
+
+export interface ToDosInfo {
+  toDos: Array<ToDo>,
+  email: string,
+  listName: string,
+  listId: string
+}

@@ -30,6 +30,7 @@ import { validation } from "../common";
 @Component({})
 export default class PromptShare extends Vue {
   @Prop() prompt: boolean;
+  @Prop() listName: string;
   user = "";
 
   get validation() {

@@ -4,7 +4,13 @@
       <ListView :lists="lists" @toDo="toDo" />
     </div>
     <div class="toDos-wrapper">
-      <ToDos v-if="showToDo" :listId="listId" :id="id" :todos="todos" />
+      <ToDos
+        v-if="showToDo"
+        :listId="listId"
+        :id="id"
+        :todos="todos"
+        :listName="listName"
+      />
     </div>
   </div>
 </template>
@@ -21,12 +27,14 @@ export default class Lists extends Vue {
   @Prop() lists: Array<any>;
   showToDo = false;
   listId = "";
+  listName = "";
   todos = [];
 
-  async toDo(listId) {
-    const result = await getToDos(this.id, listId);
+  async toDo(toDo) {
+    this.listName = toDo.listName;
+    const result = await getToDos(this.id, toDo.listId);
     this.todos = result.data;
-    this.listId = listId;
+    this.listId = toDo.listId;
     this.showToDo = true;
   }
 }
