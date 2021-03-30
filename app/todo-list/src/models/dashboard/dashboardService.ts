@@ -71,8 +71,12 @@ export const toDoEdit = (toDos: Array<ToDo>, editToDo: ToDoEdit) => {
   });
 };
 
-export const toDoShare = async (toDos: Array<ToDo>, email: string) => {
+export const toDoShare = async (
+  toDos: Array<ToDo>,
+  email: string,
+  listName: string
+) => {
   return await axios.get(
-    `${baseUrl}/todo/share/${JSON.stringify(toDos)}/${email}`
+    `${baseUrl}/todo/share/${JSON.stringify(toDos)}/${email}/${listName}`
   );
 };

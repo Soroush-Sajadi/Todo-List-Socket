@@ -79,11 +79,12 @@ router.put('/api/list/todo/edit', (req, res) => {
   });
 });
 
-router.get('/api/list/todo/share/:todos/:email', (req, res) => {
+router.get('/api/list/todo/share/:todos/:email/:listName', (req, res) => {
   const email = req.params.email;
   const todos = req.params.todos;
+  const listName = req.params.listName
 
-  shareToDos(JSON.parse(todos), email)
+  shareToDos(JSON.parse(todos), email, listName);
 })
 
 

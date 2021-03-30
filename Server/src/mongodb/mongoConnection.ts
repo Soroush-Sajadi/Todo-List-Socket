@@ -139,13 +139,13 @@ export const editToDo = (data: ToDoEdit, callback: any) => {
   .catch((err: Error) => callback(err))
 };
 
-export const shareToDos = (data: Array<ToDo>, email: string) => {
-  console.log(data, email)
+export const shareToDos = (data: Array<ToDo>, email: string, listName: string) => {
+  console.log(data, email, listName)
   db.collection('users').updateOne(
     { email: email, },
     {
       $push: {
-        "toDoLists":  {name: "test", listId:"123-123-123", toDos: data }
+        "toDoLists":  {name: listName, listId:"123-123-123", toDos: data }
       }
     }
   )

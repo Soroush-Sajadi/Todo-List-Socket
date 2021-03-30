@@ -74,7 +74,12 @@
       />
     </div>
     <div v-if="promptShare">
-      <PromptShare :prompt="promptShare" @close="close" @share="share" />
+      <PromptShare
+        :prompt="promptShare"
+        @close="close"
+        @share="share"
+        :listName="listName"
+      />
     </div>
   </div>
 </template>
@@ -99,6 +104,7 @@ export default class ToDoCard extends Vue {
   @Prop() todos: Array<ToDo>;
   @Prop() listId: string;
   @Prop() id: string;
+  @Prop() listName: string;
   prompt = false;
   promptShare = false;
   deadLine = "";
@@ -135,7 +141,7 @@ export default class ToDoCard extends Vue {
 
   async share(email) {
     this.promptShare = false;
-    await toDoShare(this.todos, email);
+    await toDoShare(this.todos, email, this.listName);
   }
 
   close(val) {
