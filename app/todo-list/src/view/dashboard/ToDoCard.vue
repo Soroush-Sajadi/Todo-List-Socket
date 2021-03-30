@@ -141,7 +141,7 @@ export default class ToDoCard extends Vue {
 
   async share(email) {
     this.promptShare = false;
-    await toDoShare(this.todos, email, this.listName);
+    await toDoShare(this.todos, email, this.listName, this.listId);
   }
 
   close(val) {
