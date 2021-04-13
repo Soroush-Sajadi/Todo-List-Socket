@@ -31,10 +31,7 @@ export const deleteToDo = async (
 };
 
 export const removeToDo = (toDoId, toDos) => {
-  console.log(toDos);
   toDos.map((toDo, index) => {
-    console.log(toDo.id, toDoId);
-
     if (toDo.id === toDoId) {
       toDos.splice(index, 1);
     }

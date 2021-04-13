@@ -46,7 +46,6 @@ export default class Dashboard extends Vue {
   }
 
   list(value) {
-    console.log(value);
     this.lists.push(value);
   }
 }
