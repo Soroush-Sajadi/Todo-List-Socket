@@ -38,7 +38,6 @@ export default class PromptShare extends Vue {
   }
   onInput(val) {
     this.user = val;
-    console.log(val);
   }
   cancel() {
     this.$emit("close", false);

@@ -41,7 +41,6 @@ export default class ListView extends Vue {
   }
 
   onItemClick(listId: string, listName: string) {
-    console.log(listName, listId);
     const toDo = { listId: listId, listName: listName };
     this.$emit("toDo", toDo);
   }
