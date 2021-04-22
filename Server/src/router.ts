@@ -80,7 +80,7 @@ router.put('/api/list/todo/edit', (req, res) => {
 });
 
 router.get('/api/list/todo/share/:toDosInfo', (req, res) => {
- 
+
   const toDosInfo = req.params.toDosInfo
 
   shareToDos(JSON.parse(toDosInfo));

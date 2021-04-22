@@ -13,6 +13,7 @@
             :value="value"
             @input="onInput"
             @keyup.enter="addNewToDo"
+            :rules="validation.notEmpty"
           ></q-input>
         </q-card-section>
         <div class="q-pa-md">
@@ -23,8 +24,8 @@
         </div>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancel" v-close-popup @click="cancel"></q-btn>
-          <q-btn flat label="Add" v-close-popup @click="addNewToDo"></q-btn>
+          <q-btn flat label="Cancel" @click="cancel"></q-btn>
+          <q-btn flat label="Add" @click="addNewToDo"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -33,6 +34,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { addToDo } from "@/models/dashboard/dashboardService";
+import { validation } from "../common";
 import { uuid } from "vue-uuid";
 @Component({})
 export default class Prompt extends Vue {
@@ -49,6 +51,10 @@ export default class Prompt extends Vue {
     return localStorage.username;
   }
 
+  get validation() {
+    return validation;
+  }
+
   addNewToDo() {
     const deadLine = this.date === null ? null : new Date(this.date);
     const toDo = {
@@ -59,9 +65,11 @@ export default class Prompt extends Vue {
       dateDeadLine: deadLine,
       complete: false
     };
-    addToDo(toDo, this.id, this.listId);
-    this.$emit("close", false);
-    this.$emit("toDo", toDo);
+    if (this.newToDo !== "") {
+      addToDo(toDo, this.id, this.listId);
+      this.$emit("close", false);
+      this.$emit("toDo", toDo);
+    }
   }
 
   cancel() {

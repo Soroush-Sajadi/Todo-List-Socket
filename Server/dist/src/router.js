@@ -80,12 +80,9 @@ router.put('/api/list/todo/edit', (req, res) => {
         res.json(result);
     });
 });
-router.get('/api/list/todo/share/:todos/:email', (req, res) => {
-    const email = req.params.email;
-    const todos = req.params.todos;
-    const a = JSON.parse(todos);
-    // tslint:disable-next-line:no-console
-    console.log(a);
+router.get('/api/list/todo/share/:toDosInfo', (req, res) => {
+    const toDosInfo = req.params.toDosInfo;
+    mongoConnection_1.shareToDos(JSON.parse(toDosInfo));
 });
 exports.default = router;
 //# sourceMappingURL=router.js.map
