@@ -82,3 +82,7 @@ export const toDoShare = async (
   };
   return await axios.get(`${baseUrl}/todo/share/${JSON.stringify(toDosInfo)}`);
 };
+
+export const removeList = async (id: string, listId: string) => {
+  return await axios.delete(`${baseUrl}/${id}/${listId}`);
+};

@@ -19,8 +19,8 @@
             >
               <q-item-label>{{ list.name }}</q-item-label>
             </q-item-section>
-            <q-item-section :id="list.listId" @click="onShareClick" side>
-              <q-item-label>Share</q-item-label>
+            <q-item-section :id="list.listId" @click="onRemoveClick" side>
+              <q-item-label>Remove</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -30,6 +30,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { removeList } from "@/models/dashboard/dashboardService";
 @Component({
   components: {}
 })
@@ -40,14 +41,18 @@ export default class ListView extends Vue {
     console.log("Clicked on main button");
   }
 
+  get id() {
+    return localStorage.id;
+  }
+
   onItemClick(listId: string, listName: string) {
     const toDo = { listId: listId, listName: listName };
     this.$emit("toDo", toDo);
   }
 
-  onShareClick(event) {
-    this.prompt = true;
-    console.log("F", event.currentTarget.id);
+  async onRemoveClick(event) {
+    const result = await removeList(this.id, event.currentTarget.id);
+    console.log(result);
   }
 
   close(val) {
