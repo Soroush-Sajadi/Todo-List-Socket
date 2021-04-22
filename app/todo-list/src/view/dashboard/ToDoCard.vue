@@ -136,7 +136,6 @@ export default class ToDoCard extends Vue {
 
   onShareClick() {
     this.promptShare = true;
-    console.log(this.promptShare);
   }
 
   async share(email) {
