@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editToDo = exports.checkedToDo = exports.deleteToDo = exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
+exports.shareToDos = exports.editToDo = exports.checkedToDo = exports.deleteToDo = exports.getToDos = exports.addToDo = exports.getLists = exports.addList = exports.logIn = exports.signIn = void 0;
 const mongodb_1 = __importDefault(require("mongodb"));
 const url = 'mongodb://127.0.0.1:27017/totdolist';
 const MongoClient = mongodb_1.default.MongoClient;
@@ -138,4 +138,12 @@ const editToDo = (data, callback) => {
         .catch((err) => callback(err));
 };
 exports.editToDo = editToDo;
+const shareToDos = (data) => {
+    db.collection('users').updateOne({ email: data.email, }, {
+        $push: {
+            "toDoLists": { name: data.listName, listId: data.listId, toDos: data.toDos }
+        }
+    });
+};
+exports.shareToDos = shareToDos;
 //# sourceMappingURL=mongoConnection.js.map

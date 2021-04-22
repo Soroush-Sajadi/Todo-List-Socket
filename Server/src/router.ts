@@ -1,8 +1,7 @@
 // tslint:disable-next-line:no-console
-import { json } from 'body-parser';
 import express from 'express';
 const router = express.Router();
-import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo, editToDo, shareToDos } from './mongodb/mongoConnection';
+import { signIn, logIn, getLists, addList, addToDo, getToDos, deleteToDo, checkedToDo, editToDo, shareToDos, deleteList } from './mongodb/mongoConnection';
 
 router.get('/', (req, res) => {
   res.json('hi');
@@ -80,11 +79,23 @@ router.put('/api/list/todo/edit', (req, res) => {
 });
 
 router.get('/api/list/todo/share/:toDosInfo', (req, res) => {
- 
+
   const toDosInfo = req.params.toDosInfo
 
   shareToDos(JSON.parse(toDosInfo));
+});
+
+router.delete('/api/list/:id/:listId', (req, res) => {
+  const id = req.params.id;
+  const listId = req.params.listId;
+  // tslint:disable-next-line:no-console
+  console.log(id, listId)
+  deleteList(id, listId, (result: any) => {
+    res.json(result)
+  })
+  
 })
+
 
 
 export default router;

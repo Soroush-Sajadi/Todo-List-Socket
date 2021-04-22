@@ -148,5 +148,14 @@ export const shareToDos = (data: ToDosInfo) => {
       }
     }
   )
+};
 
+export const deleteList = (id: string, listId: string, callback: any) => {
+  const objectId = new ObjectId(id);
+  db.collection('users').updateOne(
+    { _id: objectId},
+    { $pull: { 'toDoLists.listId': listId } }
+  )
+  .then(() => callback(true))
+  .catch((err: Error) => callback(err));
 }

@@ -24,7 +24,7 @@ export interface ToDoEdit {
 }
 
 export interface ToDosInfo {
-  toDos: Array<ToDo>,
+  toDos: ToDo[],
   email: string,
   listName: string,
   listId: string
